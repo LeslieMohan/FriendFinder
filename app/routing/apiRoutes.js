@@ -31,6 +31,7 @@ module.exports = function(app) {
             }
         }
         console.log('Best Match:', friends[index]);
+        
         friends.push(newFriend);
         response.json(friends[index]);
     });

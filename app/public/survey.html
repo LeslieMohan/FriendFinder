@@ -85,7 +85,7 @@
                 
             <h3><strong>Question 4</strong></h3>
                 <h4>
-                    You rarely do something just out of sheer curiosity.</h4>
+                    You prefer to stay home and watch movies.</h4>
                 <select data-placeholder="Select an Option" class="chosen-select" id="q4">
                     <option value="">Select an Option</option>
                     <option value="1">1 (Strongly Disagree)</option>
@@ -197,14 +197,14 @@
     </footer>
 
 <!--modal-->
-    <div class="modal fade" id="modalImage" tabindex="-1"          aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal" id="modalImage" tabindex="-1" role="dialog"         aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <div class="caption" align="center">And you are most compatible with . . . </div>
+                    <div class="wording" align="center">You are most compatible with . . . </div>
                     <img src="" id="showImage" height=80% width=80%>
-                    <div class="caption" id="caption" align="center"></div>
+                    <div class="wording" id="wording" align="center"></div>
                 </div>
 
             </div>
@@ -225,13 +225,12 @@
                 scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val() ]
             };
 
-            alert("Looking for your new friend...");
 
             $.post("/api/new", newFriend)
 
                 .done(function(data) {
                     console.log(data);
-                    $('#caption').text(data.name);
+                    $('#wording').text(data.name);
                     $('#showImage').attr('src', data.photo);
                     $('#modalImage').modal('show');
                 });

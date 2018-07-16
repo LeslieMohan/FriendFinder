@@ -13,7 +13,7 @@ body {
     margin: auto;
     width: 70%;
     height: 80%;
-    background-color: slategrey;
+    background-color: whitesmoke;
     opacity: 0.92;
     color: navy;
     text-align: center;
@@ -65,17 +65,19 @@ h3 {
 }
 
 .chosen-select {
-    background-color: navy;
-    color: whitesmoke;
-    border: 1px solid black;
+    background-color:lightgray;
+    color:rgb(135.2, 135.2,135.2);
+    border: 1px solid navy;
     width: 50%;
 
 }
 
 .form {
-    background-color: navy;
-    color: whitesmoke;
-    border: 1px solid black;
+    background-color: lightgray;
+    color:rgb(135.2, 135.2,135.2);
+    /*color: darkgray;*/
+    border: 1px solid navy;
+    border-radius: 5px;
     width: 50%; 
 }
 
@@ -84,11 +86,12 @@ h3 {
     color: white;
 }
 
-.caption {
+.wording {
     font-family: Matchstick; 
     font-size: 25px;
     color: navy;
 }
+
 
 
 /* css specific to home page*/
