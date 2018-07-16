@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
+app.use(express.static(__dirname + '/app/public'));
 
 
 //Router info for server to locate files
@@ -26,8 +27,6 @@ require('./app/routing/htmlRoutes.js')(app);
 
 //api 
 require('./app/routing/apiRoutes.js')(app);
-
-
 
 //listener to "start" server
 

@@ -4,6 +4,7 @@ body {
     background-position: center;
     background-repeat: no repeat;
     text-align: center;
+    background-attachment: fixed;
 
 }
 
@@ -48,7 +49,7 @@ hr {
 
 h4 {
     font-family: Matchstick; 
-    font-size: 20px;
+    font-size: 25px;
 }
 
 h2 {
@@ -83,4 +84,56 @@ h3 {
     color: white;
 }
 
+.caption {
+    font-family: Matchstick; 
+    font-size: 25px;
+    color: navy;
+}
+
+
+/* css specific to home page*/
+homeBody {
+    background-attachment: fixed;
+    background-color: slategray;
+    text-align: center;
+}
+
+.container {
+    width: 70%;
+    background-color: whitesmoke;
+    margin: auto;
+    text-align: center;
+    padding: 5%;
+}
+
+h1 {
+    
+    font-family:  Matchstick;
+    font-size: 75px;
+    color: navy;
+}
+
+.buttonHome {
+    padding: 16px 15px;
+    border-radius: 50%;
+    font-size: 15px;
+    background-color: darkorange;
+    color: whitesmoke;
+}
+
+.buttonHome:hover {
+    background-color: navy;
+    color: darkorange;
+}
+
+.homeh2 {
+    color: navy;
+    font-family: Matchstick;
+    font-size: 30px;
+}
+
+footer {
+    color: navy;
+
+}
 

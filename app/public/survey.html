@@ -11,7 +11,7 @@
 <!--link to bootstrap js-->    
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>      
 <!--link to css-->    
-    <link rel="stylesheet" type="text/css" href="../assets/css/survey.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 
    
     <title>Friend Finder</title>
@@ -40,7 +40,7 @@
             
 
             <h3><strong>Question 1</strong></h3>
-                <h4>Your mind is always buzzing with unexplored ideas and plans.</h4>
+                <h4>You prefer to use a car rather than a bike to get places.</h4>
                  <select data-placeholder="" class="chosen-select" id="q1">
                      <option value="">Select an Option</option>
                     <option value="1">1 (Strongly Disagree)</option>
@@ -55,7 +55,7 @@
                   
             <h3><strong>Question 2</strong></h3>
                 <h4>
-                    Generally speaking, you rely more on your experience than your imagination.</h4>
+                    Generally speaking, you like sports.</h4>
                 <select data-placeholder="" class="chosen-select" id="q2">
                     <option value="">Select an Option</option>
                     <option value="1">1 (Strongly Disagree)</option>
@@ -70,7 +70,7 @@
         
             <h3><strong>Question 3</strong></h3>
                 <h4>
-                    You find it easy to stay relaxed and focused even when there is some pressure.</h4>
+                    You love chocolate.</h4>
                 <select data-placeholder="" class="chosen-select" id="q3">
                     <option value="">Select an Option</option>
                     <option value="1">1 (Strongly Disagree)</option>
@@ -196,144 +196,55 @@
         <p><a href="/api/friends">Friends List</a> | <a href="https://github.com/LeslieMohan/FriendFinder">GitHub Repo</a></p>
     </footer>
 
-<!--Modal-->
-<div id="modalResults" class="modal">
+<!--modal-->
+    <div class="modal fade" id="modalImage" tabindex="-1"          aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <div class="caption" align="center">And you are most compatible with . . . </div>
+                    <img src="" id="showImage" height=80% width=80%>
+                    <div class="caption" id="caption" align="center"></div>
+                </div>
 
-    <!-- Modal content-->
-    <div class="modal" id="modal">
-            
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"></h4>
             </div>
-
-            <div class="modal-body">
-                    <h2 id="matchName"></h2>
-                    <img id="matchImg" src="" alt="">
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-
         </div>
-            
     </div>
 
-</div>
-
-<!--js-->
-
-<script type="text/javascript">
-
-var configuration = {
-      '.chosen-select'           : {},
-      '.chosen-select-deselect'  : {allow_single_deselect:true},
-      '.chosen-select-no-single' : {disable_search_threshold:10},
-      '.chosen-select-no-results': {no_results_text:'Something is missing!'},
-      
-    }
-    for (var selector in configuration) {
-      $(selector).chosen(configuration[selector]);
-    }
+    <!-- js -->
+    <script type="text/javascript">
 
     // Get form inputs
-    
-    $("#submit").on("click", function() {
-    
-        function validForm() {
-    
-            var isValid = true;
-              
-                $('.form').each(function() {
-                    if ( $(this).val() === '' )
-                    isValid = false;
+
+        $("#submit").on("click", function() {
+            event.preventDefault();
+
+            var newFriend = {
+                name: $("#name").val().trim(),
+                photo: $("#photo").val().trim(),
+                scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val() ]
+            };
+
+            alert("Looking for your new friend...");
+
+            $.post("/api/new", newFriend)
+
+                .done(function(data) {
+                    console.log(data);
+                    $('#caption').text(data.name);
+                    $('#showImage').attr('src', data.photo);
+                    $('#modalImage').modal('show');
                 });
-              
-                $('.userselection').each(function() {
-                    if( $(this).val() === "")
-                    isValid = false
-                })
-                    return isValid;
-                }
-            // if all questions are answered
-                    if (validForm() === true) {
-        
-            //make object of user's selections/data
-    
-            var userData = {
-                    name: $("#name").val(),
-                    photo: $("#photo").val(),
-                    scores: [
-                        $("#q1").val(),
-                        $("#q2").val(),
-                        $("#q3").val(),
-                        $("#q4").val(),
-                        $("#q5").val(),
-                        $("#q6").val(),
-                        $("#q7").val(),
-                        $("#q8").val(),
-                        $("#q9").val(),
-                        $("#q10").val(), ]
-            }
-    
-        //variables
-        var modalTitle = $('.modal-title');
-        var modalBody = $('.modal-body');
-        var modal = $('#modal');
-        var apiFriendsRoute = '/api/friends';
-    
-            if (validForm()) {
-    
-                $.get(apiFriendsRoute, function(data) {
-    
-                    var friend = findFriend(data);
-    
-                    if (friend.name !== undefined) {
-                        modalTitle.text('You have found a friend!');
-                        modalBody.html('<p class="strong">You are most compatible with:</p><p>' + friend.name + '</p><img src="' + friend.image + '" height="45">');
-                    } else {
-                        modalTitle.text('Not enough friends');
-                        modalBody.text('Unfortunately, there is no one who shares similar qualities at this time.');
-                    }
-                }).then(function() {
-                    modal.show();
-                    $('.form')[0].reset();
-                    $.post(apiFriendsRoute, userData);
-                });
-            } else {
-                modalTitle.text('Error');
-                modalBody.text('Please answer all questions.');
-                modal.show();
-            }
-    
-        }
 
-        // Get URL of website
-        var currentURL = window.location.origin;
+            $("#name").val("");
+            $("#photo").val("");
+            [$("#q1").val(""), $("#q2").val(""), $("#q3").val(""), $("#q4").val(""), $("#q5").val(""), $("#q6").val(""), $("#q7").val(""), $("#q8").val(""), $("#q9").val(""), $("#q10").val("") ]
+        });
 
-            //post the data to the friends route via Ajax. 
-            $.post(currentURL + "/api/friends", userData, function(data){
-
-                // Get best match from the AJAX post and display that name and photo.
-                $("#matchName").text(data.name);
-                $("#matchImg").attr("src", data.photo);
-                // Show it 
-                $("#modalResults").modal('toggle');
-            });
-        
-        else
-        {
-            alert("Please answer all questions!");
-        }
-        
-        return false;
-
-    });
-            
     </script>
+
+
+
     
 
         

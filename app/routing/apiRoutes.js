@@ -1,4 +1,5 @@
 var friends = require('../data/friends.js');
+var path = require("path");
 
 module.exports = function(app) {
     // API GET Request
@@ -7,35 +8,30 @@ module.exports = function(app) {
     });
   
   
-    // API POST Requests
-    //when user submits their answers this sends data to the server, then the server saves data
-    app.post("/api/friends", function(request, response) {
-    
-     var userInput = request.body;
-        var userSelections = userInput.scores;
-        var match = {
-          name: "",
-          photo: "",
-          difference: 500
-        };
-  
-        for (var i = 0; i < friends.length; i++) {
-          var totalDifference = 0;
-          for (var j = 0; j < userSelections.length; j++) {
-            totalDifference += Math.abs(friends[i].scores[j] - userResponse[j]);
-            
-            if (totalDifference <= match.difference){
-                match.name = friends[i].name;
-                match.photo = friends[i].photo;
-                match.difference = totalDifference;
+    app.post("/api/new", function(request, response) {
+      //make variables to find match
+        var newFriend = request.body;
+        var newScore = newFriend.scores;
+        var total = 0;
+        var bestMatch = 1000;
+        var index = -1;
+
+        for(var i = 0; i < friends.length; i++){
+            //Go through list of friends in db
+            total = 0;
+
+            for(var j = 0; j < newScore.length; j++){
+                // calculate total value of each friend
+                var diff = Math.abs(newScore[j] - friends[i].scores[j]);
+                total += diff;
             }
-          }
+            if(total < bestMatch){
+                bestMatch = total;
+                index = i;
+            }
         }
-  
-        friends.push(userInput);
-  
-        response.json(match);
-  
-      });
-    };
-  
+        console.log('Best Match:', friends[index]);
+        friends.push(newFriend);
+        response.json(friends[index]);
+    });
+};
