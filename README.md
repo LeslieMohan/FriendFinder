@@ -5,10 +5,10 @@ A compatibility-based "FriendFinder" application -- basically a dating app. This
  https://git.heroku.com/enthousiaste-chocolatine-75598.git
 
  ### Created using
- *Node.js
- *Express.js
- *Javascript
- *JQuery
- *Bootstrap
- *HTML
- *CSS
+ - Node.js
+ - Express.js
+ - Javascript
+ - JQuery
+ - Bootstrap
+ - HTML
+ - CSS
