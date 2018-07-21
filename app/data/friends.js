@@ -1,4 +1,4 @@
-est // array of objects holding data of friends
+// array of objects holding data of friends
 
 var friends = [
     
