@@ -11,7 +11,7 @@ module.exports = function(app) {
     app.post("/api/new", function(request, response) {
       //make variables to find a match to a new friend
         var newMatch = request.body;
-        var newScore = newFriend.scores;
+        var newScore = newMatch.scores;
         var total = 0;
         var bestMatch = 1000;
         var index = -1;
