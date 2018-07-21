@@ -9,11 +9,11 @@ module.exports = function(app) {
   
   
     app.post("/api/new", function(request, response) {
-      //make variables to find a match to a new friend
+      //make variables to find a new match 
         var newMatch = request.body;
         var newScore = newMatch.scores;
         var total = 0;
-        var bestMatch = 1000;
+        var bestMatch = 100;
         var index = -1;
 
         for(var i = 0; i < friends.length; i++){
@@ -22,7 +22,7 @@ module.exports = function(app) {
 
             for(var j = 0; j < newScore.length; j++){
                 // calculate total value of each friend
-                var diff = Math.abs(newScore[j] - friends[i].scores[j]);
+                var diff = parseInt(newScore[j] - friends[i].scores[j]);
                 total += diff;
             }
             if(total < bestMatch){
